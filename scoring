@@ -1,0 +1,10 @@
+-0.035579    gauss(o=0,_w=0.5,_c=8)
+-0.005156    gauss(o=3,_w=2,_c=8)
+0.840245     repulsion(o=0,_c=8)
+-0.035069    hydrophobic(g=0.5,_b=1.5,_c=8)
+-0.587439    non_dir_h_bond(g=-0.7,_b=0,_c=8)
+1.923        num_tors_div
+## Cl is last C of A/B, S is glicosidic Oxigen
+-100.0       atom_type_gaussian(t1=Cl,t2=S,o=0,_w=1,_c=8)
+## I is last C of Nucleophile, Zn is annomeric Carbon of sugar -1
+-100.0       atom_type_gaussian(t1=I,t2=Zn,o=0.1,_w=1,_c=8)

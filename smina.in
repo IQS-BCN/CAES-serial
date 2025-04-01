@@ -1,0 +1,19 @@
+
+##test comentari
+receptor = receptor.pdbqt
+ligand = ligand.pdbqt
+out = ligand_out.pdbqt
+
+center_x = 0  
+center_y = 0  
+center_z = 0  
+
+size_x = 17
+size_y = 17
+size_z = 17
+
+exhaustiveness = 24
+num_modes = 20
+
+custom_scoring = scoring
+custom_atoms = atoms

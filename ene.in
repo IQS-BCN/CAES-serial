@@ -1,0 +1,15 @@
+receptor = receptor.pdbqt
+
+center_x = 0  
+center_y = 0  
+center_z = 0  
+
+size_x = 17
+size_y = 17
+size_z = 17
+
+exhaustiveness = 24
+
+custom_atoms = atoms
+scoring = vina
+
