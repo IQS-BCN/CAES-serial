@@ -20,5 +20,7 @@ smina_complete.sh receptor.pdbqt ligand.pdbqt lig
 Where:
 
 receptor.pdbqt      - is the .pdbqt file for the receptor, with the atoms set accordingly to the restraints
+
 ligand.pdbqt        - is the .pdbqt file for the ligand, with the atoms set accordingly to the restaints
+
 lig                 - is the desired prefix for the outputs, to try to minimize clashes
