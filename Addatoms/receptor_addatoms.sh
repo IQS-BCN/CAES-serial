@@ -7,7 +7,7 @@ l1=''
 l1=`grep -n "$1.00  " $3 | grep "CD" | cut -d ":" -f 1`
 
 #if there was no CD, try CG
-if [$l1='']
+if [ "$l1" = "" ]
 then 
 l1=`grep -n "$1.00  " $3 | grep "CG" | cut -d ":" -f 1
 fi 
@@ -21,7 +21,8 @@ l2=''
 l2=`grep -n "$2.00  " $3 | grep "CD" | cut -d ":" -f 1`
 
 #if there was no CD, try CG
-if [$l2='']
+
+if [ "$l2" = "" ]
 then
 l2=`grep -n "$2.00  " $3 | grep "CG" | cut -d ":" -f 1`
 fi
