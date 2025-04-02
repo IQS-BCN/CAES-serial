@@ -8,6 +8,7 @@
 ## remove the necessary directories and then create them to make sure they are empty and clean
 rm -r dk
 rm -r min
+rm -r all
 
 mkdir dk
 mkdir min
@@ -35,7 +36,7 @@ done
 ## join all of the minimized results into a single file, and then split the
 ## individual structures into pdbqt's
 
-cat min/*.pdbqt > min/"${3}"_all.pdbqt
+cat min/*.pdbqt > all/"${3}"_all.pdbqt
 
-vinatopdb_resort.sh min/"${3}"_all.pdbqt
+vinatopdb_resort.sh all/"${3}"_all.pdbqt
 
