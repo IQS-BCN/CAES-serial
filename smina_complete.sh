@@ -13,14 +13,14 @@ rm -r min
 mkdir dk
 mkdir min
 
-
+file=`basename $1 .pdbqt`
 
 ## make the docking with smina and the fixed atoms
-smina --receptor $1 --ligand $2 --config smina.in --out "$3.out.pdbqt"
+smina --receptor $1 --ligand $2 --config smina.in --out "docked_${file}.pdbqt"
 
 
 ## split the output into individual pdbqt files
-vina_split --input "$3.out.pdbqt" --ligand "dk/$3."
+vina_split --input "$file.out.pdbqt" --ligand "dk/$file."
 
 ## for each pdbqt, minimize it and save the result
 for lig in `ls dk/*.pdbqt`
@@ -37,10 +37,10 @@ done
 ## join all of the minimized results into a single file, and then split the
 ## individual structures into pdbqt's
 
-cat min/*.pdbqt > dock_min_"${3}".pdbqt
+cat min/*.pdbqt > dock_min_all.${file}.pdbqt
 
-#vinatopdb_resort.sh dock_min_"${3}".pdbqt
+#vinatopdb_resort.sh dock_min_"${file}".pdbqt
 
 rm -r min
 rm -r dk
-rm $3.out.pdbqt
+rm $file.out.pdbqt
