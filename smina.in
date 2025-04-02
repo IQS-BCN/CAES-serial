@@ -1,9 +1,4 @@
 
-##test comentari
-receptor = receptor.pdbqt
-ligand = ligand.pdbqt
-out = ligand_out.pdbqt
-
 center_x = 0  
 center_y = 0  
 center_z = 0  

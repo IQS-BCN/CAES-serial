@@ -1,6 +1,8 @@
 #!/bin/bash
-## the inputs must be 1: smina.in -- config file for initial smina docking
-## 		      2: minimize.in -- config file for minimization docking
+## the inputs must be 1: receptor.pdbqt -- file for the receptor
+## 		      2: ligand.pdbqt -- file for the ligand
+##            3: ligand_out.pdbqt -- file for the output of the docking
+## th
 
 
 ## remove the necessary directories and then create them to make sure they are empty and clean
@@ -11,26 +13,29 @@ mkdir dk
 mkdir min
 
 ## make the docking with smina and the fixed atoms
-smina --config $1
+smina --receptor $1 --ligand $2 --config smina.in --out "$3.out.pdbqt"
 
-vinatopdb_resort.sh ligand_out.pdbqt
+vinatopdb_resort.sh "$3.out.pdbqt"
 
 ## split the output into individual pdbqt files
-vina_split --input ligand_out.pdbqt --ligand dk/
+vina_split --input "$3.out.pdbqt" --ligand "dk/$3."
 
 ## for each pdbqt, minimize it and save the result
 for lig in `ls dk/*.pdbqt`
 do 
 name=`basename $lig .pdbqt`
+
 file="$name.pdbqt"
 
-smina --config $2 --minimize --autobox_ligand $lig --ligand $lig --out "min/${name}_out.pdbqt" 
+echo $file
+
+smina --receptor $2 --config minimize.in --minimize --autobox_ligand $lig --ligand $lig --out "min/${name}_min.pdbqt" 
 done
 
 ## join all of the minimized results into a single file, and then split the
 ## individual structures into pdbqt's
 
-cat min/*.pdbqt > min/all.pdbqt
+cat min/*.pdbqt > min/"${3}"_all.pdbqt
 
-vinatopdb_resort.sh min/all.pdbqt
+vinatopdb_resort.sh min/"${3}"_all.pdbqt
 

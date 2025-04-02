@@ -1,7 +1,3 @@
-receptor = receptor.pdbqt
-
-
-
 autobox_add = 3
 exhaustiveness = 24
 
