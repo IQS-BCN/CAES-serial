@@ -1,17 +1,19 @@
 #!/bin/bash
 ## the inputs must be 1: receptor.pdbqt -- file for the receptor
 ## 		      2: ligand.pdbqt -- file for the ligand
-##            3: ligand_out.pdbqt -- file for the output of the docking
+##            3: model1 -- prefix for the out files 
 ## th
 
 
 ## remove the necessary directories and then create them to make sure they are empty and clean
 rm -r dk
 rm -r min
-rm -r all
+
 
 mkdir dk
 mkdir min
+
+
 
 ## make the docking with smina and the fixed atoms
 smina --receptor $1 --ligand $2 --config smina.in --out "$3.out.pdbqt"
@@ -35,9 +37,9 @@ done
 ## join all of the minimized results into a single file, and then split the
 ## individual structures into pdbqt's
 
-cat min/*.pdbqt > all/"${3}"_all.pdbqt
+cat min/*.pdbqt > dock_min_"${3}".pdbqt
 
-vinatopdb_resort.sh all/"${3}"_all.pdbqt
+#vinatopdb_resort.sh dock_min_"${3}".pdbqt
 
 rm -r min
 rm -r dk
