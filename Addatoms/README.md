@@ -12,7 +12,7 @@ The usage for both the receptor and ligand addatoms scripts is as follows.
 ### Receptor
 
 ```
-receptor_addatoms.sh Occupancy_AB Occupancy_Nuc receptor
+receptor_addatoms.sh Occupancy_AB Occupancy_Nuc receptor.pdbqt
 ```
 
 ### Ligand
