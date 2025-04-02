@@ -16,7 +16,6 @@ mkdir min
 ## make the docking with smina and the fixed atoms
 smina --receptor $1 --ligand $2 --config smina.in --out "$3.out.pdbqt"
 
-vinatopdb_resort.sh "$3.out.pdbqt"
 
 ## split the output into individual pdbqt files
 vina_split --input "$3.out.pdbqt" --ligand "dk/$3."
@@ -40,3 +39,6 @@ cat min/*.pdbqt > all/"${3}"_all.pdbqt
 
 vinatopdb_resort.sh all/"${3}"_all.pdbqt
 
+rm -r min
+rm -r dk
+rm $3.out.pdbqt
