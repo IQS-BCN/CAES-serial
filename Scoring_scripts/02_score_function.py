@@ -3,7 +3,7 @@ import numpy as np
 
 import sys
 
-def score_function(params):
+def score_function(params, ntype):
     # establir paths
     df = params
 
@@ -11,8 +11,9 @@ def score_function(params):
     #definir els offsets (ValRef) de AB
     o_AB = [2.8005,110,-0.57,110,0.98005,1]
 
-    #definir els offsets (ValRef) de Nuc
-    o_Nuc = [3.5,110,1,110,0.8005,1]
+    if ntype == 'R':
+        #definir els offsets (ValRef) de Nuc
+        o_Nuc = [3.5,110,1,110,0.8005,1]
 
     #definir l'amplada dels intervals
     wi_AB = [x*0.3 for x in o_AB]
@@ -59,9 +60,32 @@ def puntuacio(dades, offset, width, weights):
 
     return st/sum(weights), s
 
-params = pd.read_csv('params.csv')
-a = score_function(params)
 
-#a = pd.concat([a, t], axis=1)
-print(a)
-a.to_csv('output.csv', index=False)
+import sys
+import argparse
+
+parser = argparse.ArgumentParser(
+    description="Function to score a given receptor - ligand pair, using the parameters calculated with 01_calc_params.py")
+
+
+
+
+#-db DATABASE -u USERNAME -p PASSWORD -size 20000
+parser.add_argument("-i", "--input", dest = "input", default = "parameters.cvs", help="CSV file with the calculated parameters of the poses to score")
+parser.add_argument("-o", "--output", dest = "out", default = "score.cvs", help="CSV file with the resulting scores")
+parser.add_argument('-nt', '--NucType', dest = 'ntype', default='R', help='Type of nucleophile activity: R for retaining activity, I for inveritng activity (not implemented)')
+parser.add_argument('-v', '--verbose',action='store_true')
+
+args = parser.parse_args()
+
+if args.verbose:
+    print("SCORING GEOMETRIC PARAMETERS FOR:\nInput file: {}\nOutput file: {}\nNucleophile type: {}".format(
+        args.input,
+        args.out, 
+        args.ntype 
+    ))
+
+params = pd.read_csv(args.input, args.ntype)
+
+a = score_function(params)
+a.to_csv(args.out, index=False)

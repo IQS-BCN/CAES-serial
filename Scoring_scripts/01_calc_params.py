@@ -165,8 +165,6 @@ def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslli
 import sys
 import argparse
 
-import argparse
-
 parser = argparse.ArgumentParser(
     description="Function to calculate the geometric parameters for the geometric scoring of a given receptor - ligand pair.")
 
@@ -184,7 +182,7 @@ parser.add_argument('-o', "--output", dest='out', default='params.csv', help='Fi
 args = parser.parse_args()
 
 if args.verbose:
-    print("Receptor: {} \nLigand: {}\nOccupancy of AB & Nuc: {}, {}\n".format(
+    print("CALCULATING GEOMETRIC PARAMETERS FOR:\nReceptor: {} \nLigand: {}\nOccupancy of AB & Nuc: {}, {}\n".format(
         args.receptor,
         args.ligand,
         args.oAB,
