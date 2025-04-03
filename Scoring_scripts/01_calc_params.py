@@ -161,6 +161,47 @@ def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslli
         modelnum += 1
     return params
 
-a = calc_params('4HU0_GH_5_120 157 258.pdb', '4HU0_GH_5_120 157 258.pdb', 157.00, 258.00, [2739,2733,2747,2742], 'B')
 
-a.to_csv('params.csv', index=False)
+import sys
+import argparse
+
+import argparse
+
+parser = argparse.ArgumentParser(
+    description="Function to calculate the geometric parameters for the geometric scoring of a given receptor - ligand pair.")
+
+
+#-db DATABASE -u USERNAME -p PASSWORD -size 20000
+parser.add_argument("-r", "--receptor", dest = "receptor", default = "receptor.pdb", help="Receptor PDB file")
+parser.add_argument("-l", "--ligand", dest = "lig", default = "ligand.pdb", help="Ligand PDB file, can have multiple frames")
+parser.add_argument("-oAB", "--occupancyAB",dest ="oAB", help="Occupancy of AB residue. Must be format 123.00", type=float)
+parser.add_argument("-oNuc", "--occupancyNuc",dest = "oNuc", help="Occupancy of Nuc residue. Must be format 123.00", type=float)
+parser.add_argument("-i", "--ligindex",dest = "index", help="List of indexes for the ligand, [og, cn, c1, c2]", default=[])
+parser.add_argument("-c", "--ligchain",dest = "chain", help="Chain of the ligand", default='X')
+parser.add_argument('-v', '--verbose',action='store_true')
+parser.add_argument('-o', "--output", dest='out', default='params.csv', help='File name for the output csv. Must include csv in the name.')
+
+args = parser.parse_args()
+
+if args.verbose:
+    print("Receptor: {} \nLigand: {}\nOccupancy of AB & Nuc: {}, {}\n".format(
+        args.receptor,
+        args.ligand,
+        args.oAB,
+        args.Nuc
+    ))
+    if args.index != []:
+        print("Forcing ligand indexes to:\n   og: {}\n   cn: {}\n   c1: {}\n   c2: {}".format(
+            args.index[0],
+            args.index[1],
+            args.index[2], 
+            args.index[3]
+        ))
+    if args.chain != 'X':
+        print("Forcing ligand chain to: chain {}".format(args.chain))
+
+
+
+a = calc_params(args.receptor,args.ligand,args.oAB,args.oNuc,args.index,args.chain)
+
+a.to_csv(args.out, index=False)
