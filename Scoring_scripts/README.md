@@ -7,7 +7,7 @@ Firts, the 01_calc_params script must be used, then the 02_score_function.
 
 ### 01_calc_params.py
 ```
-
+usage:
 python 01_calc_params.py [-h] [-r RECEPTOR] [-l LIG] [-oAB OAB] [-oNuc ONUC] [-i INDEX] [-c CHAIN] [-v] [-o OUT]
 
 Function to calculate the geometric parameters for the geometric scoring of a given receptor - ligand pair.
@@ -27,7 +27,8 @@ options:
 ### 02_score_function.py
 
 ```
-usage: 02_score_function.py [-h] [-i INPUT] [-0 OUT] [-nt NTYPE] [-v]
+usage:
+python 02_score_function.py [-h] [-i INPUT] [-0 OUT] [-nt NTYPE] [-v]
 
 Function to score a given receptor - ligand pair, using the parameters calculated with 01_calc_params.py
 
