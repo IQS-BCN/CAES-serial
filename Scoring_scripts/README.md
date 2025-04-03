@@ -32,9 +32,11 @@ usage: 02_score_function.py [-h] [-i INPUT] [-0 OUT] [-nt NTYPE] [-v]
 Function to score a given receptor - ligand pair, using the parameters calculated with 01_calc_params.py
 
 options:
-  -h, --help                     show this help message and exit
-  -i INPUT, --input INPUT        CSV file with the calculated parameters of the poses to score
-  -o OUT, --output OUT           CSV file with the resulting scores
-  -nt NTYPE, --NucType NTYPE     Type of nucleophile activity: R for retaining activity, I for inveritng activity (not implemented)
+  -h, --help                          show this help message and exit
+  -i INPUT, --input INPUT             CSV file with the calculated parameters of the poses to score
+  -o OUT, --output OUT                CSV file with the resulting scores
+  -nt NTYPE, --NucType NTYPE          Type of nucleophile activity: 
+                                                R for retaining activity, 
+                                                I for inveritng activity (not implemented)
   -v, --verbose
 ```
