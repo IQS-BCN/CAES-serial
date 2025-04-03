@@ -6,7 +6,9 @@ This series of scripts are the ones related to the geometric scoring of the enzy
 Firts, the 01_calc_params script must be used, then the 02_score_function.
 
 ### 01_calc_params
-```01_calc_params.py [-h] [-r RECEPTOR] [-l LIG] [-oAB OAB] [-oNuc ONUC] [-i INDEX] [-c CHAIN] [-v] [-o OUT]
+```
+
+01_calc_params.py [-h] [-r RECEPTOR] [-l LIG] [-oAB OAB] [-oNuc ONUC] [-i INDEX] [-c CHAIN] [-v] [-o OUT]
 
 Function to calculate the geometric parameters for the geometric scoring of a given receptor - ligand pair.
 
