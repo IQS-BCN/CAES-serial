@@ -4,15 +4,15 @@ This scripts allow for the structure of the RESULTS directory to be built. It is
 
 ## Needed Structure
 
-* PROTLISTS
+* **./PROTLISTS**
 Directoriy containing the different lists of proteins to be evaluated for each GH family. The files shoud be: GH_1.txt, GH_2.txt, GH_3.txt ... GH_i.txt
 
-* HMM
+* **./HMM**
 Directory containing the different hmm for the different families. As it comes from **Eloy**'s work: ```HMM/GH_i/GH_i.hmm```
 
-* CATRES
+* **./CATRES**
 Directory containing the different files annotating the catalitic residues' position on the HMM. The files should be named ```GH_i.catres```
 
-* PDB_REF
+* **./PDB_REF**
 Directory containg the different pdb files used as reference for each familiy. The files should be named: ```GH_i_xxxx.pdb```
 
