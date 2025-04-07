@@ -14,8 +14,8 @@ global path
 
 # usage:
 #
-#   source easimaptodalacadena_CarboPlanes_v5.tcl
-#   occup_superpos "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
+#   source Occup_Superpos.tcl
+#   occup_superpos "165 360" GH_1 3SCU GH1 10 1 2 4 6 9 sidechain "chain A"
 
 
 # modificat 8/04 per JFP
