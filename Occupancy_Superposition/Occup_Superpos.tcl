@@ -98,7 +98,7 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
     		puts "Fin" }
 
  	if {$code != "" } {
-				set pd [file exists "${domain}/${domain}.pdb"]
+				set pd [file exists "${code}/${code}_origin.pdb"]
 
 				if {$pd == 0} {
 					#mol pdbload $code
