@@ -20,6 +20,7 @@ This script (*Occup_Superpos.tcl*) is suposed to be run in the given GH family d
         ├── GH_i.hmm
         ├── GH_i.txt
         ├── pdb_ref.pdb
+        ├── pdb_ref.atoms
         └── UP00000
             └── UP00000.pdb
 
@@ -31,6 +32,7 @@ GH_i.txt        list of UP codes for the given family
 GH_i.hmm        HMM for the given family
 GH_i.catres     file containing the hmm for the catalytic resdiues of the family
 pdb_ref.pdb     pdb file for the reference protein of the GH family
+pdb_ref.atoms   file with the atom indexes of the sugar for the reference protein of the GH family
 
 CAZYMES_3D      directory containing the pdb files for the downloaded AF_DB structures
 ```
