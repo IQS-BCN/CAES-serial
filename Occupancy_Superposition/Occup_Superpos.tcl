@@ -15,13 +15,13 @@ global path
 # usage:
 #
 #   source easimaptodalacadena_CarboPlanes_v5.tcl
-#   easimap_all "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
+#   occup_superpos "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
 
 
 # modificat 8/04 per JFP
 #	canviar el que envia a origen per que quadri amb el que necessita el carboplanes
 # 	canviar el origen a origen_carbo_planes
-proc easimap_all {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo chainR} {
+proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo chainR} {
 
 	global path
 

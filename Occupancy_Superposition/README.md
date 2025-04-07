@@ -4,8 +4,33 @@ The scripts here are the ones in charge of aligning the CAZYMES_3D structures wi
 
 This procedure is inherited from EASiMap, following the same logic, but without the calculations of the celestial maps.
 
-***FALTA: Script que generi les carpetes per code i despres tiri el occup_superpos.tcl***
+***FALTA: script que llegeixi GH_i.catres i llenci la comanda***
+***FALTA: forma d'acomular els atoms dels anells dels lligands ref, no volem commandes prefetes***
 
+## Needs, eviroment & output
+
+This script (*Occup_Superpos.tcl*) is suposed to be run in the given GH family directory, with the following enviroment:
+
+```bash
+├── CAZYMES_3D
+│   └── UP00000.pdb
+└── RESULTS
+    └── GH_i
+        ├── GH_i.catres
+        ├── GH_i.hmm
+        ├── GH_i.txt
+        └── pdb_ref.pdb
+```
+```
+Where:
+
+GH_i.txt        list of UP codes for the given family
+GH_i.hmm        HMM for the given family
+GH_i.catres     file containing the hmm for the catalytic resdiues of the family
+pdb_ref.pdb     pdb file for the reference protein of the GH family
+
+CAZYMES_3D      directory containing the pdb files for the downloaded AF_DB structures
+```
 ## Usage
 
 ```
@@ -21,6 +46,6 @@ chainR          Cadena del ligando Ej: "chain A"
 
  usage:
 
-   source easimaptodalacadena_CarboPlanes_v5.tcl
-   easimap_all "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
+   source Occup_Superpos.tcl
+   occup_superpos "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
 ```
