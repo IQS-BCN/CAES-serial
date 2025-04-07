@@ -47,5 +47,5 @@ chainR          Cadena del ligando Ej: "chain A"
  usage:
 
    source Occup_Superpos.tcl
-   occup_superpos "165 360" GH_1 3SCU GH1 GH1_3SCU 10 1 2 4 6 9 sidechain "chain A"
+   occup_superpos "165 360" GH_1 3SCU GH1 "4552 4553 4554 4555 4556 4562" sidechain "chain A"
 ```
