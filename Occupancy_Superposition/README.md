@@ -13,13 +13,16 @@ This script (*Occup_Superpos.tcl*) is suposed to be run in the given GH family d
 
 ```bash
 ├── CAZYMES_3D
-│   └── UP00000.pdb
+│   └── UP000000.pdb
 └── RESULTS
     └── GH_i
         ├── GH_i.catres
         ├── GH_i.hmm
         ├── GH_i.txt
-        └── pdb_ref.pdb
+        ├── pdb_ref.pdb
+        └── UP00000
+            └── UP00000.pdb
+
 ```
 ```
 Where:
