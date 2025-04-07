@@ -15,4 +15,4 @@ Directory containing the different files annotating the catalitic residues' posi
 
 * **./PDB_REF**
 Directory containg the different pdb files used as reference for each familiy. The files should be named: ```GH_i_xxxx.pdb```
-
+It is criticall that the pdb's contain GH_i_ at the start, to be able to select them for their given family.

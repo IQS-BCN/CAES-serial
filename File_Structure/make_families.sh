@@ -9,6 +9,6 @@ mkdir RESULTS/${famname}
 cp PROTLISTS/${fam} RESULTS/${famname}/.
 cp HMM/${famname}.hmm RESULTS/${famname}/.
 cp CATRES/${famname}.catres RESULTS/${famname}/.
-cp PDB_REF/${famname}*.pdb RESULTS/${famname}/.
+cp PDB_REF/${famname}_*.pdb RESULTS/${famname}/.
 
 done
