@@ -154,7 +154,7 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
 						#representacio final
 						#guardar mol
 						set pdbguardado [atomselect top "all"]
-		       				$pdbguardado writepdb ${code}/${code}.pdb 
+		       				$pdbguardado writepdb ${code}/${code}_origin.pdb 
 
 						#LOG
 						if {$pdbload == 0} { puts  $channellog "$code,00,Success,na" }

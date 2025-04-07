@@ -31,6 +31,8 @@ pdb_ref.pdb     pdb file for the reference protein of the GH family
 
 CAZYMES_3D      directory containing the pdb files for the downloaded AF_DB structures
 ```
+
+The output of this script, is the placing of the algined structure in the given UP00000 directory, indide the GH_i directory.
 ## Usage
 
 ```
