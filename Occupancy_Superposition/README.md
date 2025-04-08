@@ -9,21 +9,15 @@ This procedure is inherited from EASiMap, following the same logic, but without 
 
 ## Needs, eviroment & output
 
-This script (*Occup_Superpos.tcl*) is suposed to be run in the given GH family directory, with the following enviroment:
+This script (*Occup_Superpos.tcl*) is suposed to be run on the outermost layer, with the following enviroment:
 
 ```bash
 ├── CAZYMES_3D
 │   └── UP000000.pdb
-└── RESULTS
-    └── GH_i
-        ├── GH_i.catres
-        ├── GH_i.hmm
-        ├── GH_i.txt
-        ├── pdb_ref.pdb
-        ├── pdb_ref.atoms
-        └── UP00000
-            └── UP00000.pdb
-
+└── PDB_REF
+    ├── GH_i_0000.atoms
+    └── GH_i_0000.cif
+     
 ```
 ```
 Where:

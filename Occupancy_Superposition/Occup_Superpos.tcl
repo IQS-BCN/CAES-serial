@@ -48,7 +48,7 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
 #por la posición en el HMM y la altura en el logo respectivamente
 #Hay que asegurarse de que esta proteína no presenta errores en la numeración
     
-	set cif_path "$pdb_code_ref.cif"
+	set cif_path "PDB_REF/$pdb_code_ref.cif"
     	mol new $cif_path
 	
 
@@ -58,7 +58,7 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
 
 
 	set ligguardado [atomselect top "all"]
-	$ligguardado writepdb $pdb_code_ref.pdb
+	$ligguardado writepdb "PDB_REF/${pdb_code_ref}_origin.pdb"
 
 
 	
@@ -98,12 +98,12 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
     		puts "Fin" }
 
  	if {$code != "" } {
-				set pd [file exists "${code}/${code}_origin.pdb"]
+				set pd [file exists "CAZYMES_3D_ORIGIN/${code}_origin.pdb"]
 
 				if {$pd == 0} {
 					#mol pdbload $code
 						
-					set cif_path "../../CAZYMES_3D/$code.pdb"
+					set cif_path "CAZYMES_3D/$code.pdb"
                         		set mol_loaded 0
 					catch {	
 						mol new $cif_path waitfor all
@@ -154,7 +154,7 @@ proc occup_superpos {hmm_column domain pdb_code_ref CAZY_fam atom_chain atomo ch
 						#representacio final
 						#guardar mol
 						set pdbguardado [atomselect top "all"]
-		       				$pdbguardado writepdb ${code}/${code}_origin.pdb 
+		       				$pdbguardado writepdb "CAZYMES_3D_ORIGIN/${code}_origin.pdb"
 
 						#LOG
 						if {$pdbload == 0} { puts  $channellog "$code,00,Success,na" }
