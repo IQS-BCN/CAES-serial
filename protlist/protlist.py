@@ -29,3 +29,11 @@ tsv_s50 = tsv_s50[tsv_s50['family'].isin(fams)]
 print('Number of ID50 structures of familes wth protref:               ' + str(len(tsv_s50)))
 tsv_s50 = tsv_s50.drop_duplicates(subset=['uniprot_mapped'])
 print('Number of ID50, prot ref structures without uniprot duplicates: ' + str(len(tsv_s50)))
+
+for fam in fams:
+    
+    fam_rows_s50 = tsv_s50[tsv_s50['family'] == fam]
+    fam_rows_s50 = fam_rows_s50['cazyid']
+    print('Number of ID50 structures in ' + fam + ':                      ' + str(len(fam_rows_s50)))
+    fam_rows_s50.to_csv('protlist\\' + fam + '_ID50.txt', index=False, header=False)
+    
