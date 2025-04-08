@@ -1,1 +1,0 @@
-This series of scripts are the ones in charge of selecting the reference proteins for each GH family, building the respective .atoms files with the indexes of the sugar ring for the respective protein and building a gH_list.txt of the GH's where a reference protein could be selectes succesfully.
