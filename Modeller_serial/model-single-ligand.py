@@ -32,5 +32,5 @@ a = MyModel(env,
 a.final_malign3d = True
 
 a.starting_model = 1
-a.ending_model = 30
+a.ending_model = 2 
 a.make()

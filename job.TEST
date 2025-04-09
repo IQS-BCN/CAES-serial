@@ -1,0 +1,68 @@
+#!/bin/bash
+#SBATCH --job-name=sup
+#SBATCH --partition=bio
+#SBATCH --time=480:00:00
+##SBATCH --nodes=2
+#SBATCH --ntasks=32
+#SBATCH --mem=12000
+##SBATCH --gres=gpu:1
+#SBATCH --output=outputs.%N.%j.out
+#SBATCH --error=errors.%N.%j.err
+
+# ====================================================================== #
+# Informative system variables:
+
+echo "SLURM_JOBID="$SLURM_JOBID
+echo "SLURM_JOB_NODELIST="$SLURM_JOB_NODELIST
+echo "SLURM_NNODES="$SLURM_NNODES
+echo "SLURMTMPDIR="$SLURMTMPDIR
+echo "submission directory = "$SLURM_SUBMIT_DIR
+echo "execution directory = $(pwd)"
+echo "PROCS LIST:"
+srun --nodes=${SLURM_NNODES} bash -c 'hostname'
+NPROCS=`srun --nodes=${SLURM_NNODES} bash -c 'hostname' |wc -l`
+echo NPROCS=$NPROCS
+# ====================================================================== #
+
+# ====================================================================== #
+# Job tasks:
+
+RUNDIR=`pwd`
+
+echo RUNDIR=$RUNDIR
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/joanfillolp/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/joanfillolp/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/joanfillolp/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/joanfillolp/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+# load modules
+conda activate smina2
+module load vmd/1.9.4 
+module load modeller/10.0
+##
+##load MGL tools
+
+PATH=$PATH:/home/aitor.vega/MGLTools-1.5.6/MGLToolsPckgs/AutoDockTools/Utilities24
+
+for i in `ls PROTLIST/`
+do
+numfam=`basename $i .txt`
+echo "doing superposition of $numfam"
+#./do_superposition.sh $numfam > out.$numfam.superposition.out &
+
+done
+wait
+echo “Execution completed! Such a nice result!”
+date
+echo “Job duration: $SECONDS seconds”
+
+# ====================================================================== #

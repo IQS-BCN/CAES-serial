@@ -16,7 +16,7 @@ mkdir min
 file=`basename $1 .pdbqt`
 
 ## make the docking with smina and the fixed atoms
-smina --receptor $1 --ligand $2 --config smina.in --out "docked_${file}.pdbqt"
+smina --cpu 1 --receptor $1 --ligand $2 --config smina.in --out "docked_${file}.pdbqt"
 
 
 ## split the output into individual pdbqt files
@@ -31,7 +31,7 @@ file="$name.pdbqt"
 
 echo $file
 
-smina --receptor $2 --config minimize.in --minimize --autobox_ligand $lig --ligand $lig --out "min/${name}_min.pdbqt" 
+smina --cpu 1 --receptor $2 --config minimize.in --minimize --autobox_ligand $lig --ligand $lig --out "min/${name}_min.pdbqt" 
 done
 
 ## join all of the minimized results into a single file, and then split the
