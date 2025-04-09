@@ -26,14 +26,16 @@ do
    #cd RESULTS/$fam
    if [ -e "RESULTS/${fam}/CAES_$position" ]
    then 
-        echo "CAES_$position already exists, skipping $position"
+        echo "CAES_$position already exists, goint into it to check steps"
+        cd RESULTS/${fam}/CAES_$position
    else
 	echo "creating CAES_$position inside $fam directory"
         cp -pr CAES-serial RESULTS/${fam}/CAES_$position
         cd RESULTS/${fam}/CAES_$position
           echo $position > position.txt
           echo $fam > family.txt
-        
+   fi
+  
           NUC=`cat ../${fam}.catres | cut -d " " -f 1`
           AB=`cat ../${fam}.catres | cut -d " " -f 2`
 
@@ -52,14 +54,14 @@ do
             cd ..      
           fi
 # do prepare
-          if [-e "PREPARE" ]
+          if [ -e "PREPARE" ]
           then
             echo "$position/PREPARE already exists, skipping processing $position"
 	  else
             cp -pr Addatoms PREPARE
 	         cp MODELS/*.pdb PREPARE/.
 	         cd PREPARE
-	           ./do_prepare.sh 
+	           ./do_prepare.sh $NUC $AB 
             cd ..
           fi
 # do docking
@@ -68,5 +70,4 @@ do
 	  ./do_scoring.sh position
           echo "CAES for position:  $position done -- `date`"
        cd ../../../ 
-   fi
 done

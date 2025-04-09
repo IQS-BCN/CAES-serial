@@ -1,4 +1,6 @@
 PROTEIN=$1
+#enable gobling
+shopt -s extglob
 
 echo "do_modelling: getting sequence  from $PROTEIN"
 bash get_sequence_fromPDB.sh
