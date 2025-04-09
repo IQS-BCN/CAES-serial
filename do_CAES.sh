@@ -34,9 +34,10 @@ do
         NUC=`cat ${fam}.catres | cut -d " " -f 1`
         AB=`cat ${fam}.catres | cut -d " " -f 2`
 
-        cp ../../CAZYMES_3D_ORIGIN/${position}_origin.pdb .
+        cp ../../CAZYMES_3D_ORIGIN/${position}_origin.pdb ${position}.pdb
 
-        ./do_modelling.sh position
+        ./do_modelling.sh $position
+
         ./do_prepare.sh position
         ./do_docking.sh position
         ./do_scoring.sh position
