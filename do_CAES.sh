@@ -11,9 +11,14 @@ else
    mkdir RESULTS
 fi
 
-echo "CAES -- Carbohydrate Active Enzyme Smina docking initatied - `date`"
 
+echo "checking if ${position}_origin.pdb exists in CAZYMES_3D_ORIGIN"
 
+if [ -e "CAZYMES_3D_ORIGIN/${position}_origin.pdb" ]
+then
+   echo "CAES -- Carbohydrate Active Enzyme Smina docking initatied - `date`"
+
+   echo "$position exists, proceeding with CAES"
    echo "CAES for position:  $position -- `date`"
    echo "finding family for $position"
    fam_file=`grep $position PROTLIST/*.txt | cut -d ":" -f 1`
@@ -98,12 +103,14 @@ echo "CAES -- Carbohydrate Active Enzyme Smina docking initatied - `date`"
                     echo "docking $suc to $receptor"
                     ./smina_complete.sh $receptor ligand.pdbqt
                     rm $receptor
+
                   done
 
                rm -v !(*_all.pdbqt)
 	      cd ..  
               fi
             done
+            rm -r Docking
 
             cd ..
        rm -r Docking
@@ -115,4 +122,6 @@ echo "CAES -- Carbohydrate Active Enzyme Smina docking initatied - `date`"
 	  ./do_scoring.sh position
           echo "CAES for position:  $position done -- `date`"
        cd ../../../ 
-
+else
+  echo "${position}_origin.pdb does not exist in CAZYMES_3d_ORIGIN, skipping $position"
+fi
