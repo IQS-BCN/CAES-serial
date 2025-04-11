@@ -53,8 +53,22 @@ then
 # do modelling
           if [ -e "MODELS" ]
           then
-            echo "$position/MODELS already exists, skipping modelling $position"
+            echo "$position/MODELS already exists"
+            echo "checking if PREPARE exists"
+            if [ -e "PREPARE" ]
+            then
+              echo "PREPARE exists, no need to redo MODELLING"
+              mod=0
+            else 
+              echo "PREPARE does not exist, re-doing MODELLING"
+              rm -r "MODELS"
+              mod=1
+            fi
           else
+            mod=1
+          fi
+          if [ $mod -eq 0 ]
+          then
             echo "starting modelling for $position"
             cp -pr Modeller_serial MODELS
             cp $position.pdb MODELS/template.pdb
@@ -124,4 +138,13 @@ then
        cd ../../../ 
 else
   echo "${position}_origin.pdb does not exist in CAZYMES_3d_ORIGIN, skipping $position"
+  echo "checking if $position was already created"
+  if [ -e "RESULTS/${position}" ]
+  then
+    echo "RESULTS/$position file exists, removing it"
+    rm -r RESULTS/$position
+    echo  "exiting CAES for $position"
+  else
+    echo "RESULTS/$position does not exist, exiting CAES for $position" 
+  fi
 fi
