@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --job-name=sup
+#SBATCH --job-name=smina02
 #SBATCH --partition=bio
-#SBATCH --time=480:00:00
-##SBATCH --nodes=2
-#SBATCH --ntasks=1
-#SBATCH --mem=8000
+#SBATCH --time=500:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=30
+#SBATCH --mem=7500
 ##SBATCH --gres=gpu:1
 #SBATCH --output=outputs.%N.%j.out
 #SBATCH --error=errors.%N.%j.err
@@ -26,14 +26,17 @@ echo NPROCS=$NPROCS
 
 # ====================================================================== #
 # Job tasks:
-
+## creating and splitting the protlist into chuncks
+# 1209  cat protlist.all | sort -R > protlist.shuffle
+# 1210  split -l 1080 -d protlist.shuffle protlist.s.
+# 1211  split -l 270 -d protlist.s.00 protlist.s.00.job
 RUNDIR=`pwd`
 
 PATH=$PATH:/home/aitor.vega/MGLTools-1.5.6/MGLToolsPckgs/AutoDockTools/Utilities24:
 echo RUNDIR=$RUNDIR
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/joanfillolp/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/joanfillolp/miniconda3/bin/conda' 'shell.Bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -54,10 +57,20 @@ module load autodock/vina
 ##load MGL tools
 
 PATH=$PATH:/home/aitor.vega/MGLTools-1.5.6/MGLToolsPckgs/AutoDockTools/Utilities24
-
-bash run_CAES.sh list.test list.ligand
-
+j=1
+for i in `seq 1 9 262`
+do
+echo "Running CAES for CPU $j"
+wait 2
+j=$(( j + 1 ))
+b=$(( i + 8 ))
+PROTLIST=`sed -n "$i,$b p" protlist.s.00.job02`
+bash run_CAES.sh "$PROTLIST" liglistc.txt > out.tmp.s.00.job02.cpu$j &
+done
 wait
+cat out.tmp.s.00.job02.cpu* > out.s.00.job02
+rm out.tmp.s.00.job02.cpu*
+
 echo “Execution completed! Such a nice result!”
 date
 echo “Job duration: $SECONDS seconds”

@@ -1,5 +1,8 @@
 #!/bin/bash
-POSITIONLIST=$1
+
+shopt -s extglob
+position=$1
+LIGANDLIST=$2
 if [ -e "RESULTS" ]
 then
    echo "RESULTS directory already exists, skipping creation"
@@ -9,8 +12,8 @@ else
 fi
 
 echo "CAES -- Carbohydrate Active Enzyme Smina docking initatied - `date`"
-for position in $POSITIONLIST
-do
+
+
    echo "CAES for position:  $position -- `date`"
    echo "finding family for $position"
    fam_file=`grep $position PROTLIST/*.txt | cut -d ":" -f 1`
@@ -27,6 +30,7 @@ do
    if [ -e "RESULTS/${fam}/CAES_$position" ]
    then 
         echo "CAES_$position already exists, goint into it to check steps"
+        cp -pr CAES-serial/* RESULTS/${fam}/CAES_$position/.
         cd RESULTS/${fam}/CAES_$position
    else
 	echo "creating CAES_$position inside $fam directory"
@@ -57,7 +61,7 @@ do
           if [ -e "PREPARE" ]
           then
             echo "$position/PREPARE already exists, skipping processing $position"
-	  else
+	       else
             cp -pr Addatoms PREPARE
 	         cp MODELS/*.pdb PREPARE/.
 	         cd PREPARE
@@ -65,9 +69,50 @@ do
             cd ..
           fi
 # do docking
-	  ./do_docking.sh position
+          if [ -e "DOCKING" ]
+          then
+            echo "$position/DOCKING already exists, entering to check docked sugars"
+          else
+            echo "starting dockings for $position"
+            mkdir DOCKING
+	    cp -pr Docking DOCKING/.
+          fi  
+          cd DOCKING
+	  echo $LIGANDLIST
+            for suc in $LIGANDLIST
+            do
+              if [ -e "$suc" ] 
+              then
+                echo "$suc already docked, skipping docking $suc"
+              else
+		echo "docking $suc to $position"
+                cp -pr Docking $suc
+                cd $suc
+		pwd
+		echo "copying $suc.pdbqt from LIGAND_PROCESSED"../../PREPARE/*.pdbqt
+		cp ../../../../../LIGAND_PROCESSED/$suc.pdbqt ligand.pdbqt
+                cp ../../PREPARE/*.pdbqt .
+                
+                  for receptor in `ls *_smina.pdbqt`
+                  do
+                    echo "docking $suc to $receptor"
+                    ./smina_complete.sh $receptor ligand.pdbqt
+                    rm $receptor
+                  done
+
+               rm -v !(*_all.pdbqt)
+	      cd ..  
+              fi
+            done
+
+            cd ..
+       rm -r Docking
+       rm -r Addatoms
+       rm -r Modeller_serial
+       rm -r Scoring
+
 # do scoring          
 	  ./do_scoring.sh position
           echo "CAES for position:  $position done -- `date`"
        cd ../../../ 
-done
+

@@ -1,5 +1,8 @@
-PROTLIST_FILE=$1
+LIGLIST_FILE=$2
+PROTLIST=$1
+LIGLIST=`cat ${LIGLIST_FILE}`
 
-PROTLIST=`cat ${PROTLIST_FILE}`
-echo "processing list file $PROTLIST_FILE"
-bash do_CAES.sh $PROTLIST
+for position in $PROTLIST
+do
+  bash do_CAES.sh $position "$LIGLIST"
+done
