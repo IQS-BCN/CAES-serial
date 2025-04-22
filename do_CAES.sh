@@ -100,7 +100,12 @@ then
 	  echo $LIGANDLIST
             for suc in $LIGANDLIST
             do
-              if [ -e "$suc" ] 
+              count="0"
+              if [ -e $suc ]
+                then
+                count=`ls $suc/* | wc -l`
+              fi
+              if [ "$count" -gt 0 ] 
               then
                 echo "$suc already docked, skipping docking $suc"
               else
@@ -127,6 +132,8 @@ then
             rm -r Docking
 
             cd ..
+
+      
        rm -r Docking
        rm -r Addatoms
        rm -r Modeller_serial
