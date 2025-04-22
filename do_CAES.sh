@@ -85,8 +85,22 @@ then
 # do prepare
           if [ -e "PREPARE" ]
           then
-            echo "$position/PREPARE already exists, skipping processing $position"
+            echo "$position/PREPARE already exists, checking contents"
+            countprep=`ls PREPARE/model.*_fit_smina.pdbqt | wc -l`
+            if [ "$countprep" -gt 1 ]
+            then 
+              echo "$position/PREPARE has at least 2 elements inside, skipping prepare"
+              prep=1
+            else 
+              prep=0
+            fi
+        
 	       else
+           prep=0
+          fi
+        if [ $prep -eq 0 ]
+        then
+           echo "doing PREPARE on  $position"
             cp -pr Addatoms PREPARE
 	         cp MODELS/*.pdb PREPARE/.
 	         cd PREPARE
