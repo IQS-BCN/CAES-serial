@@ -138,13 +138,13 @@ then
        cd ../../../ 
 else
   echo "${position}_origin.pdb does not exist in CAZYMES_3d_ORIGIN, skipping $position"
-  echo "checking if $position was already created"
-  if [ -e "RESULTS/${position}" ]
-  then
-    echo "RESULTS/$position file exists, removing it"
-    rm -r RESULTS/$position
-    echo  "exiting CAES for $position"
-  else
-    echo "RESULTS/$position does not exist, exiting CAES for $position" 
-  fi
+#  echo "checking if $position was already created"
+#  if [ -e "RESULTS/${position}" ]
+#  then
+#    echo "RESULTS/$position file exists, removing it"
+#    rm -r RESULTS/$position
+#    echo  "exiting CAES for $position"
+#  else
+#    echo "RESULTS/$position does not exist, exiting CAES for $position" 
+#  fi
 fi
