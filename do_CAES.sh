@@ -57,15 +57,21 @@ then
             echo "checking if PREPARE exists"
             if [ -e "PREPARE" ]
             then
-              echo "PREPARE exists, no need to redo MODELLING"
-              mod=0
+              echo "PREPARE exists, checking if MODELS are completed"
+              models=`ls MODELS/model.B999900*_fit.pdb | wc -l`
+              if [ "$models" -gt 1 ]
+              then
+                mod=1
+              else
+                mod=0
+              fi
             else 
               echo "PREPARE does not exist, re-doing MODELLING"
               rm -r "MODELS"
-              mod=1
+              mod=0
             fi
           else
-            mod=1
+            mod=0
           fi
           if [ $mod -eq 0 ]
           then
