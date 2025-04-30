@@ -142,27 +142,12 @@ then
                     echo "docking $suc to $receptor"
                     ./smina_complete.sh $receptor ligand.pdbqt
                     rm $receptor
+
                   done
-               
+
                rm -v !(*_all.pdbqt)
 	      cd ..  
               fi
-            if [ -e "$suc/complexes_all.sorted.pdb" ]
-            then
-              echo "pdb already built of $suc and $position dokings" 
-            else
-              if [ -e "get_complexes_sorted_caes.sh" ]
-              then
-                echo "get complexes protocol already in directory"
-              else
-                cp -pr ../Docking/get_complexes_sorted_caes.sh .
-                echo "get complexes script copied to directroy"
-              fi
-              echo "building PDB of $suc and $position"
-              cd $suc
-              bash get_complexes_sorted_caes.sh $position $suc ../../../
-              cd .. 
-            fi
             done
             rm -r Docking
 
