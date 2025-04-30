@@ -1,10 +1,14 @@
-import pandas as pd
-import numpy as np
-
-import sys
-
 def score_function(params, ntype):
-    # establir paths
+    """Function to score a given set of geometric parameters, calculated with 01_calc_params.py.
+
+    Args:
+        params: CSV file with the calculated parameters of the poses to score
+        ntype: Type of nucleophile activity: R for retaining activity, I for inveritng activity (not implemented)
+
+    Returns:
+        scores.csv: CSV file with the resulting scores
+    """
+        # establir paths
     df = params
 
     out = pd.DataFrame(columns=['Model', 'Frame', 'Type', 'Oxygen', 'Score_w', 'Score0', 'Score1', 'Score2', 'Score3', 'Score4', 'Score5'])
@@ -58,6 +62,11 @@ def puntuacio(dades, offset, width, weights):
     
 
     return st/sum(weights), s
+
+import pandas as pd
+import numpy as np
+
+import sys
 
 
 import sys

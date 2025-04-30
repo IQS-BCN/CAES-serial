@@ -1,12 +1,3 @@
-import numpy as np
-import pandas as pd
-from math import atan2, degrees
-from Bio import PDB
-from Bio.PDB import PDBParser
-import os
-import sys
-from ori_pos import *
-
 def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslligand = [], chainlig = 'X'):
     """ Calculate the parameters for the orientation of the ligand in the receptor
     Args:
@@ -19,7 +10,7 @@ def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslli
         chainlig: (Optional) chain of the ligand to calculate the parameters
         
     Returns:
-            params: pandas dataframe with the parameters calculated for the orientation of the ligand in the receptor
+        params: pandas dataframe with the parameters calculated for the orientation of the ligand in the receptor
     """
     params = pd.DataFrame(columns=['Model', 'Frame','Type', 'Oxygen', 'd', 'alpha', 'omega', 'beta', 'theta', 'gamma'])
     modelnum = 0
@@ -161,7 +152,14 @@ def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslli
         modelnum += 1
     return params
 
-
+import numpy as np
+import pandas as pd
+from math import atan2, degrees
+from Bio import PDB
+from Bio.PDB import PDBParser
+import os
+import sys
+from ori_pos import *
 import sys
 import argparse
 
