@@ -16,10 +16,8 @@ def score_function(params, ntype):
         o_Nuc = [3.5,110,1,110,0.8005,1]
 
     #definir l'amplada dels intervals
-    wi_AB = [x*0.3 for x in o_AB]
-    print(o_AB)
-    print(wi_AB)
-    wi_Nuc = [x*0.3 for x in o_Nuc]
+    wi_AB = [0.9, 20, 0.18, 20, 0.33, 0.2]
+    wi_Nuc = [1, 20, 0.18, 20, 0.33, 0.2]
     #definir els pesos
     we = [1,1,1,1,0,1]
 
@@ -30,7 +28,8 @@ def score_function(params, ntype):
             s, t = puntuacio(dades.loc[i], o_AB, wi_AB, we)
         if df.loc[i, 'Type'] == 'Nuc':
             s, t = puntuacio(dades.loc[i], o_Nuc, wi_Nuc, we)
-        out.loc[i, 'ID'] = df.loc[i, 'ID']
+        out.loc[i, 'Model'] = df.loc[i, 'Model']
+        out.loc[i, 'Frame'] = df.loc[i, 'Frame']
         out.loc[i, 'Type'] = df.loc[i, 'Type']
         out.loc[i, 'Oxygen'] = df.loc[i, 'Oxygen']
         out.loc[i, 'Score_w'] = s
@@ -71,8 +70,8 @@ parser = argparse.ArgumentParser(
 
 
 #-db DATABASE -u USERNAME -p PASSWORD -size 20000
-parser.add_argument("-i", "--input", dest = "input", default = "parameters.cvs", help="CSV file with the calculated parameters of the poses to score")
-parser.add_argument("-o", "--output", dest = "out", default = "score.cvs", help="CSV file with the resulting scores")
+parser.add_argument("-i", "--input", dest = "input", default = "parameters.csv", help="CSV file with the calculated parameters of the poses to score")
+parser.add_argument("-o", "--output", dest = "out", default = "score.csv", help="CSV file with the resulting scores")
 parser.add_argument('-nt', '--NucType', dest = 'ntype', default='R', help='Type of nucleophile activity: R for retaining activity, I for inveritng activity (not implemented)')
 parser.add_argument('-v', '--verbose',action='store_true')
 
@@ -85,7 +84,7 @@ if args.verbose:
         args.ntype 
     ))
 
-params = pd.read_csv(args.input, args.ntype)
+params = pd.read_csv(args.input)
 
-a = score_function(params)
+a = score_function(params, args.ntype)
 a.to_csv(args.out, index=False)
