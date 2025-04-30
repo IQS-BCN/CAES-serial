@@ -133,24 +133,24 @@ def calc_params(path_receptor, path_ligand, occupancyAB, occupancyNuc, indexslli
                 if nom == 'C2':
                     c2 = atom.get_coord()
         else: # si es donen indexs de lligands
-            for res in chain:
-                for mol in res:
-                    for atom in mol: #recorrer els atoms de la molecula i acomular els que siguin els indexs
-                        if atom.get_serial_number() == indexslligand[0]:
-                            og = atom.get_coord()
-                        if atom.get_serial_number() == indexslligand[1]:
-                            cn = atom.get_coord()
-                        if atom.get_serial_number() == indexslligand[2]:
-                            c1 = atom.get_coord()
-                        if atom.get_serial_number() == indexslligand[3]:
-                            c2 = atom.get_coord()
-
-
+           for atom in chain.get_atoms():
+               if atom.is_disordered() != 0:
+                   print("sugar atoms are disordered, working arround it")
+                   og = [atom.disordered_get_list()[0].get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[0])][0] 
+                   cn = [atom.disordered_get_list()[0].get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[1])][0]
+                   c1 = [atom.disordered_get_list()[0].get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[2])][0]   
+                   c2 = [atom.disordered_get_list()[0].get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[3])][0]
+               else:
+                   og = [atom.get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[0])] 
+                   cn = [atom.get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[1])]
+                   c1 = [atom.get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[2])]   
+                   c2 = [atom.get_coord() for atom in chain.get_atoms() if atom.serial_number == int(indexslligand[3])]
+                   
         #calcular els parametres
         p = ori_pos(o1_AB, c_AB, o2_AB, og, c1, cn)
         n = str(modelnum)
         
-        model_file = path_receptor.split('.')[-2]
+        model_file = path_ligand.split('.')[-2]
         params.loc[modelnum*4 +1] = [model_file, n, 'AB', '1', p[0], p[1], np.cos(np.radians((p[2]))), p[3], p[4], np.cos(np.radians((p[5]*2)))]
         p = ori_pos(o2_AB, c_AB, o1_AB, og, c2, cn)
         params.loc[modelnum*4 +2] = [model_file, n, 'AB', '2', p[0], p[1], np.cos(np.radians((p[2]))), p[3], p[4], np.cos(np.radians((p[5]*2)))]
@@ -174,19 +174,19 @@ parser.add_argument("-r", "--receptor", dest = "receptor", default = "receptor.p
 parser.add_argument("-l", "--ligand", dest = "lig", default = "ligand.pdb", help="Ligand PDB file, can have multiple frames")
 parser.add_argument("-oAB", "--occupancyAB",dest ="oAB", help="Occupancy of AB residue. Must be format 123.00", type=float)
 parser.add_argument("-oNuc", "--occupancyNuc",dest = "oNuc", help="Occupancy of Nuc residue. Must be format 123.00", type=float)
-parser.add_argument("-i", "--ligindex",dest = "index", help="List of indexes for the ligand, [og, cn, c1, c2]", default=[])
+parser.add_argument("-i", "--ligindex",dest = "index", help="List of indexes for the ligand, 'og cn c1 c2'", default="")
 parser.add_argument("-c", "--ligchain",dest = "chain", help="Chain of the ligand", default='X')
 parser.add_argument('-v', '--verbose',action='store_true')
 parser.add_argument('-o', "--output", dest='out', default='params.csv', help='File name for the output csv. Must include csv in the name.')
 
 args = parser.parse_args()
-
+args.index=args.index.split()
 if args.verbose:
     print("CALCULATING GEOMETRIC PARAMETERS FOR:\nReceptor: {} \nLigand: {}\nOccupancy of AB & Nuc: {}, {}\n".format(
         args.receptor,
-        args.ligand,
+        args.lig,
         args.oAB,
-        args.Nuc
+        args.oNuc
     ))
     if args.index != []:
         print("Forcing ligand indexes to:\n   og: {}\n   cn: {}\n   c1: {}\n   c2: {}".format(
@@ -200,6 +200,6 @@ if args.verbose:
 
 
 
-a = calc_params(args.receptor,args.ligand,args.oAB,args.oNuc,args.index,args.chain)
+a = calc_params(args.receptor,args.lig,args.oAB,args.oNuc,args.index,args.chain)
 
 a.to_csv(args.out, index=False)
