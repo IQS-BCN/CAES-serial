@@ -44,7 +44,13 @@ then
           echo $position > position.txt
           echo $fam > family.txt
    fi
-  
+   if [ -e "Docking" ]
+   then
+     echo "Docking file directory already exists in CAES_$position" 
+   else
+     cp -pr ../../../CAES-serial/Docking .
+     echo "Copying Docking file from CAES-serial into CAES_$position"
+   fi 
           NUC=`cat ../${fam}.catres | cut -d " " -f 1`
           AB=`cat ../${fam}.catres | cut -d " " -f 2`
 
@@ -117,6 +123,14 @@ then
 	    cp -pr Docking DOCKING/.
           fi  
           cd DOCKING
+          
+	  if [ -e "Docking" ]
+          then
+            echo "Docking already in DOCKING"
+          else
+            cp -r ../Docking .
+	    echo "Copying Docking in DOCKING."
+          fi 
 	  echo $LIGANDLIST
             for suc in $LIGANDLIST
             do
@@ -129,11 +143,12 @@ then
               then
                 echo "$suc already docked, skipping docking $suc"
               else
+		pwd
 		echo "docking $suc to $position"
                 cp -pr Docking $suc
                 cd $suc
 		pwd
-		echo "copying $suc.pdbqt from LIGAND_PROCESSED"../../PREPARE/*.pdbqt
+		echo "copying $suc.pdbqt from LIGAND_PROCESSED, also copying ../../PREPARE/*.pdbqt"
 		cp ../../../../../LIGAND_PROCESSED/$suc.pdbqt ligand.pdbqt
                 cp ../../PREPARE/*.pdbqt .
                 
@@ -143,26 +158,29 @@ then
                     ./smina_complete.sh $receptor ligand.pdbqt
                     rm $receptor
                   done
-               
+               echo "removing: `ls !(*_all.pdbqt)`"
                rm -v !(*_all.pdbqt)
 	      cd ..  
               fi
+
             if [ -e "$suc/complexes_all.sorted.pdb" ]
             then
               echo "pdb already built of $suc and $position dokings" 
             else
-              if [ -e "get_complexes_sorted_caes.sh" ]
+              if [ -e "$suc/get_complexes_sorted_caes.sh" ]
               then
                 echo "get complexes protocol already in directory"
               else
-                cp -pr ../Docking/get_complexes_sorted_caes.sh .
+                cp -pr Docking/get_complexes_sorted_caes.sh $suc/.
                 echo "get complexes script copied to directroy"
               fi
               echo "building PDB of $suc and $position"
               cd $suc
               bash get_complexes_sorted_caes.sh $position $suc ../../../
-              cd .. 
+              rm get_complexes_sorted_caes.sh
+	      cd .. 
             fi
+
             done
             rm -r Docking
 
@@ -175,7 +193,7 @@ then
        rm -r Scoring
 
 # do scoring          
-	  ./do_scoring.sh position
+	  #./do_scoring.sh position
           echo "CAES for position:  $position done -- `date`"
        cd ../../../ 
 else
