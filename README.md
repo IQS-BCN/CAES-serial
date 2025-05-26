@@ -1,4 +1,4 @@
-![do_CAES](https://github.com/user-attachments/assets/0945cbba-24d9-44dc-bc96-c0fe9eb8b4a4)File containing the necessary scripts to run the SMINA docking with restraints.
+File containing the necessary scripts to run the SMINA docking with restraints.
 
 In the different directories, there is a *README.md* file explaining the main usage and requirements of the given procedure.
 
@@ -15,3 +15,8 @@ In the *.\Addatoms* directory there are the scripts to add the Cl, S, I and Zn t
 
 4. **Modeller**
 In the *./Modeller_serial* directory there are the scripts to model the side chain flexibility of the receptors.
+
+
+The file to run the pipeline is do_CAES.sh, with a workflow as follows:
+
+![do_CAES](https://github.com/user-attachments/assets/0945cbba-24d9-44dc-bc96-c0fe9eb8b4a4)
