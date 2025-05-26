@@ -20,3 +20,8 @@ receptor.pdbqt      - is the .pdbqt file for the receptor, with the atoms set ac
 ligand.pdbqt        - is the .pdbqt file for the ligand, with the atoms set accordingly to the restaints
 
 lig                 - is the desired prefix for the outputs, to try to minimize clashes
+
+
+The workflow of this file is as follows:
+
+![smina_complete](https://github.com/user-attachments/assets/d6eaebc2-0d66-4146-bf5a-0c609dbae200)
