@@ -11,7 +11,7 @@ l1=`grep -n "$AB.00" $3 | grep "CD" | cut -d ":" -f 1`
 #if there was no CD, try CG
 if [ "$l1" = "" ]
 then 
-l1=`grep -n "$AB.00" $3 | grep "CG" | cut -d ":" -f`
+l1=`grep -n "$AB.00" $3 | grep "CG" | cut -d ":" -f 1`
 fi 
 
 #substitute C to Chlorine on l1 line
